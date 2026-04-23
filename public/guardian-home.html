@@ -49,7 +49,6 @@
     <main id="home">
       <section class="hero">
         <div class="hero-copy">
-          <span class="hero-kicker">DIGITAL ASSET FOR EVERYONE</span>
           <h1>
             가디언홀딩스는 새로운 자산 시장의
             <br />
@@ -61,44 +60,6 @@
             Guardian Holdings dreams of a world where everyone can enjoy these new opportunities
             regardless of age, gender, or race.
           </p>
-        </div>
-      </section>
-
-      <section class="metrics-band" aria-label="가디언홀딩스 주요 지표">
-        <div class="container">
-          <div class="metrics-shell">
-            <article class="metric-card">
-              <span class="metric-card-label">FOUNDATION</span>
-              <strong class="metric-card-value" data-countup data-target="2018" data-grouping="false"
-                >2018</strong
-              >
-              <p>블록체인과 금융을 잇는 디지털 자산 플랫폼 비전을 시작했습니다.</p>
-            </article>
-
-            <article class="metric-card">
-              <span class="metric-card-label">MEMBERS</span>
-              <strong class="metric-card-value" data-countup data-target="7" data-suffix="만+"
-                >7만+</strong
-              >
-              <p>누적 가입자 기준으로 더 많은 사용자가 오아시스 서비스를 경험했습니다.</p>
-            </article>
-
-            <article class="metric-card">
-              <span class="metric-card-label">STAKING</span>
-              <strong class="metric-card-value" data-countup data-target="4" data-suffix="종"
-                >4종</strong
-              >
-              <p>다양한 상품 포트폴리오로 사용자 선택 폭을 넓혔습니다.</p>
-            </article>
-
-            <article class="metric-card">
-              <span class="metric-card-label">VOLUME</span>
-              <strong class="metric-card-value" data-countup data-target="100" data-suffix="억+"
-                >100억+</strong
-              >
-              <p>일 거래대금 기준의 성장 모멘텀을 꾸준히 축적하고 있습니다.</p>
-            </article>
-          </div>
         </div>
       </section>
 
@@ -368,7 +329,7 @@
 
           <div class="history-grid">
             <article class="history-card">
-              <strong data-countup data-target="2022" data-grouping="false">2022</strong>
+              <strong>2022</strong>
               <ul>
                 <li>오아시스 서비스 고도화를 위한 리뉴얼 착수</li>
                 <li>준법감시실 신설</li>
@@ -379,7 +340,7 @@
             </article>
 
             <article class="history-card">
-              <strong data-countup data-target="2021" data-grouping="false">2021</strong>
+              <strong>2021</strong>
               <ul>
                 <li>ISMS 정보보호 관리 체계 인증 획득</li>
                 <li>가상자산 브랜드 평판 5위</li>
@@ -392,7 +353,7 @@
             </article>
 
             <article class="history-card">
-              <strong data-countup data-target="2020" data-grouping="false">2020</strong>
+              <strong>2020</strong>
               <ul>
                 <li>예치, 대출 서비스 오픈</li>
                 <li>스테이킹 서비스 런칭</li>
@@ -454,18 +415,6 @@
       </section>
     </main>
 
-    <div class="mobile-cta-bar">
-      <a
-        class="mobile-cta-link primary"
-        href="https://oasisexc.com/"
-        target="_blank"
-        rel="noreferrer"
-      >
-        거래소 바로가기
-      </a>
-      <a class="mobile-cta-link secondary" href="#career">채용공고 보기</a>
-    </div>
-
     <footer class="site-footer">
       <div class="container footer-layout">
         <div class="footer-main">
@@ -523,56 +472,9 @@
         const menuLinks = document.querySelectorAll("[data-menu-link]");
         const priceNode = document.querySelector("[data-coin-price]");
         const changeNode = document.querySelector("[data-coin-change]");
-        const hero = document.querySelector(".hero");
-        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-        const revealGroups = [
-          ".hero-copy",
-          ".metrics-shell",
-          ".metric-card",
-          ".promo-card",
-          ".about-card",
-          ".split-copy",
-          ".service-card",
-          ".download-copy",
-          ".history-title",
-          ".history-card",
-          ".partner-logos img",
-          ".news-section .container",
-          ".contact-layout",
-          ".footer-layout",
-        ];
-
-        const revealNodes = [
-          ...new Set(
-            revealGroups.flatMap((selector) => Array.from(document.querySelectorAll(selector)))
-          ),
-        ];
-
-        [
-          ".metrics-shell .metric-card",
-          ".promo-grid .promo-card",
-          ".about-grid .about-card",
-          ".service-grid .service-card",
-          ".history-grid .history-card",
-          ".partner-logos img",
-        ].forEach((selector) => {
-          document.querySelectorAll(selector).forEach((node, index) => {
-            node.style.setProperty("--reveal-delay", `${index * 90}ms`);
-          });
-        });
-
-        revealNodes.forEach((node) => {
-          node.classList.add("reveal-ready");
-        });
 
         const syncHeader = () => {
           header.classList.toggle("is-scrolled", window.scrollY > 24 || body.classList.contains("menu-open"));
-        };
-
-        const syncHero = () => {
-          if (!hero || prefersReducedMotion.matches) return;
-          hero.style.setProperty("--hero-shift", `${Math.min(window.scrollY * 0.16, 72)}px`);
         };
 
         const closeMenu = () => {
@@ -593,84 +495,8 @@
           link.addEventListener("click", closeMenu);
         });
 
-        const formatCounterValue = (value, node) => {
-          const useGrouping = node.dataset.grouping !== "false";
-          return new Intl.NumberFormat("ko-KR", {
-            maximumFractionDigits: 0,
-            useGrouping,
-          }).format(value);
-        };
-
-        const animateCounter = (node) => {
-          if (node.dataset.counted === "true") return;
-
-          const target = Number(node.dataset.target ?? "0");
-          const prefix = node.dataset.prefix ?? "";
-          const suffix = node.dataset.suffix ?? "";
-
-          if (!Number.isFinite(target)) return;
-
-          node.dataset.counted = "true";
-
-          const render = (value) => {
-            node.textContent = `${prefix}${formatCounterValue(value, node)}${suffix}`;
-          };
-
-          if (prefersReducedMotion.matches) {
-            render(target);
-            return;
-          }
-
-          const duration = Number(node.dataset.duration ?? "1400");
-          const startTime = performance.now();
-
-          const tick = (now) => {
-            const progress = Math.min((now - startTime) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            render(Math.round(target * eased));
-
-            if (progress < 1) {
-              requestAnimationFrame(tick);
-            }
-          };
-
-          requestAnimationFrame(tick);
-        };
-
-        const revealNode = (node) => {
-          node.classList.add("is-visible");
-          node.querySelectorAll("[data-countup]").forEach(animateCounter);
-          if (node.matches("[data-countup]")) animateCounter(node);
-        };
-
-        if (prefersReducedMotion.matches || !("IntersectionObserver" in window)) {
-          revealNodes.forEach(revealNode);
-        } else {
-          const revealObserver = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((entry) => {
-                if (!entry.isIntersecting) return;
-                revealNode(entry.target);
-                revealObserver.unobserve(entry.target);
-              });
-            },
-            {
-              threshold: 0.18,
-              rootMargin: "0px 0px -10% 0px",
-            }
-          );
-
-          revealNodes.forEach((node) => {
-            revealObserver.observe(node);
-          });
-        }
-
-        window.addEventListener("scroll", () => {
-          syncHeader();
-          syncHero();
-        }, { passive: true });
+        window.addEventListener("scroll", syncHeader, { passive: true });
         syncHeader();
-        syncHero();
 
         const formatNumber = (value) =>
           new Intl.NumberFormat("ko-KR", {
