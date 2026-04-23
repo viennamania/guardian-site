@@ -36,6 +36,10 @@ body {
   overflow-x: hidden;
 }
 
+main {
+  position: relative;
+}
+
 body.menu-open {
   overflow: hidden;
 }
@@ -52,6 +56,10 @@ img {
 
 button {
   font: inherit;
+}
+
+section[id] {
+  scroll-margin-top: 104px;
 }
 
 .container {
@@ -196,9 +204,11 @@ body.menu-open .menu-toggle span:nth-child(3) {
 }
 
 .hero {
+  position: relative;
+  isolation: isolate;
   min-height: 760px;
   background-image: url("./assets/guardian/hero-desktop.png");
-  background-position: center center;
+  background-position: center calc(50% + var(--hero-shift, 0px));
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
@@ -207,11 +217,40 @@ body.menu-open .menu-toggle span:nth-child(3) {
   padding: 120px 80px 64px;
 }
 
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(8, 12, 24, 0.1), rgba(8, 12, 24, 0.34)),
+    linear-gradient(90deg, rgba(8, 12, 24, 0.08), rgba(8, 12, 24, 0.22));
+}
+
 .hero-copy {
   width: min(100%, 620px);
   margin-top: 34px;
   margin-right: 72px;
+  padding: 32px 34px 36px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 30px;
+  background: linear-gradient(180deg, rgba(10, 15, 30, 0.16), rgba(10, 15, 30, 0.34));
+  box-shadow: 0 28px 70px rgba(8, 12, 24, 0.22);
+  backdrop-filter: blur(16px);
   color: #ffffff;
+}
+
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 18px;
+  padding: 10px 15px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
 }
 
 .hero h1 {
@@ -230,6 +269,75 @@ body.menu-open .menu-toggle span:nth-child(3) {
   font-weight: 300;
 }
 
+.metrics-band {
+  position: relative;
+  z-index: 3;
+  margin-top: -78px;
+  padding-bottom: 48px;
+}
+
+.metrics-shell {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 18px;
+  border-radius: 32px;
+  background: linear-gradient(140deg, #0b1426, #12233f 56%, #1d3b6d);
+  box-shadow: 0 26px 68px rgba(8, 17, 31, 0.18);
+}
+
+.metric-card {
+  min-height: 208px;
+  padding: 24px 22px 22px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
+  color: #ffffff;
+}
+
+.metric-card-label {
+  display: inline-block;
+  margin-bottom: 18px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.metric-card-value {
+  display: block;
+  margin-bottom: 14px;
+  font-size: clamp(34px, 3vw, 54px);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+
+.metric-card p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
+  line-height: 1.72;
+  font-weight: 300;
+}
+
+.reveal-ready {
+  opacity: 0;
+  filter: blur(14px);
+  transform: translate3d(0, 42px, 0) scale(0.985);
+  transition:
+    opacity 760ms ease,
+    transform 760ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 760ms ease;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-ready.is-visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: none;
+}
+
 .promo-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -239,6 +347,7 @@ body.menu-open .menu-toggle span:nth-child(3) {
   position: relative;
   min-height: 463px;
   overflow: hidden;
+  transition: transform 260ms ease, box-shadow 260ms ease;
 }
 
 .promo-tag {
@@ -413,6 +522,11 @@ body.menu-open .menu-toggle span:nth-child(3) {
 
 .about-card {
   text-align: center;
+  padding: 34px 30px 38px;
+  border: 1px solid rgba(15, 23, 42, 0.07);
+  border-radius: 30px;
+  background: linear-gradient(180deg, #ffffff, #f8f9fb);
+  box-shadow: 0 16px 42px rgba(15, 23, 42, 0.05);
 }
 
 .about-card-label {
@@ -481,6 +595,11 @@ body.menu-open .menu-toggle span:nth-child(3) {
 
 .service-card {
   min-height: 1px;
+  padding: 28px 24px 30px;
+  border: 1px solid rgba(15, 23, 42, 0.07);
+  border-radius: 26px;
+  background: linear-gradient(180deg, #ffffff, #f9fafc);
+  box-shadow: 0 16px 42px rgba(15, 23, 42, 0.05);
 }
 
 .service-head {
@@ -574,6 +693,7 @@ body.menu-open .menu-toggle span:nth-child(3) {
   background: rgba(255, 255, 255, 0.96);
   color: var(--text);
   box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
+  transition: transform 220ms ease, box-shadow 220ms ease;
 }
 
 .store-button img {
@@ -598,18 +718,20 @@ body.menu-open .menu-toggle span:nth-child(3) {
   margin-top: 48px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  border-top: 1px solid var(--line);
+  gap: 24px;
 }
 
 .history-card {
   min-width: 0;
-  padding: 42px 32px 0;
-  border-left: 1px solid var(--line);
+  padding: 34px 30px 30px;
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  background: linear-gradient(180deg, #ffffff, #f9fafc);
+  box-shadow: 0 16px 42px rgba(15, 23, 42, 0.05);
 }
 
 .history-card:first-child {
-  border-left: 0;
-  padding-left: 0;
+  padding-left: 30px;
 }
 
 .history-card strong {
@@ -652,6 +774,9 @@ body.menu-open .menu-toggle span:nth-child(3) {
   height: 40px;
   width: auto;
   object-fit: contain;
+  opacity: 0.76;
+  filter: grayscale(1);
+  transition: transform 260ms ease, opacity 260ms ease, filter 260ms ease;
 }
 
 .news-section {
@@ -680,6 +805,7 @@ body.menu-open .menu-toggle span:nth-child(3) {
   color: #ffffff;
   font-size: 19px;
   font-weight: 700;
+  transition: transform 220ms ease, box-shadow 220ms ease;
 }
 
 .contact-section {
@@ -800,6 +926,41 @@ body.menu-open .menu-toggle span:nth-child(3) {
   font-size: 15px;
 }
 
+@media (hover: hover) {
+  .promo-card:hover,
+  .about-card:hover,
+  .service-card:hover,
+  .history-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 26px 54px rgba(15, 23, 42, 0.12);
+  }
+
+  .store-button:hover,
+  .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 28px rgba(15, 23, 42, 0.16);
+  }
+
+  .partner-logos img:hover {
+    transform: translateY(-6px);
+    opacity: 1;
+    filter: grayscale(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal-ready {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+}
+
 @media (max-width: 1180px) {
   .site-header {
     padding-inline: 22px;
@@ -812,6 +973,10 @@ body.menu-open .menu-toggle span:nth-child(3) {
 
   .hero-copy {
     margin-right: 0;
+  }
+
+  .metrics-shell {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .promo-grid {
@@ -882,6 +1047,15 @@ body.menu-open .menu-toggle span:nth-child(3) {
   .hero-copy {
     width: calc(100% - 32px);
     margin: 0 auto;
+    padding: 24px 22px 26px;
+    border-radius: 24px;
+  }
+
+  .hero-kicker {
+    margin-bottom: 14px;
+    padding: 8px 12px;
+    font-size: 10px;
+    letter-spacing: 0.16em;
   }
 
   .hero h1 {
@@ -893,6 +1067,38 @@ body.menu-open .menu-toggle span:nth-child(3) {
   .hero p {
     font-size: 15px;
     line-height: 1.42;
+  }
+
+  .metrics-band {
+    margin-top: -36px;
+    padding-bottom: 18px;
+  }
+
+  .metrics-shell {
+    gap: 12px;
+    padding: 12px;
+    border-radius: 24px;
+  }
+
+  .metric-card {
+    min-height: 1px;
+    padding: 18px 16px 20px;
+    border-radius: 18px;
+  }
+
+  .metric-card-label {
+    margin-bottom: 14px;
+    font-size: 10px;
+  }
+
+  .metric-card-value {
+    margin-bottom: 10px;
+    font-size: 30px;
+  }
+
+  .metric-card p {
+    font-size: 13px;
+    line-height: 1.65;
   }
 
   .promo-card {
@@ -993,6 +1199,12 @@ body.menu-open .menu-toggle span:nth-child(3) {
     margin-bottom: 18px;
   }
 
+  .about-card,
+  .service-card,
+  .history-card {
+    border-radius: 22px;
+  }
+
   .desktop-only {
     display: none;
   }
@@ -1067,7 +1279,7 @@ body.menu-open .menu-toggle span:nth-child(3) {
   .history-card {
     flex: 0 0 calc(100% - 38px);
     min-width: calc(100% - 38px);
-    padding: 28px 0 0;
+    padding: 28px 22px 24px;
     scroll-snap-align: start;
   }
 
@@ -1132,5 +1344,11 @@ body.menu-open .menu-toggle span:nth-child(3) {
 
   .footer-logo {
     width: 108px;
+  }
+}
+
+@media (max-width: 540px) {
+  .metrics-shell {
+    grid-template-columns: 1fr;
   }
 }
